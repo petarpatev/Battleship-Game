@@ -26,6 +26,14 @@
             color: rgb(83, 175, 19);
         }
 
+        .hit {
+            background: url("images/ship.png") no-repeat center center;
+        }
+
+        .miss {
+            background: url("images/miss.png") no-repeat center center;
+        }
+
         table {
             position: absolute;
             left: 173px;
@@ -61,7 +69,7 @@
 
         <table>
             <tr>
-                <td id="00"></td>
+                <td id="00" class="miss"></td>
                 <td id="01"></td>
                 <td id="02"></td>
                 <td id="03"></td>
@@ -71,7 +79,7 @@
             </tr>
 
             <tr>
-                <td id="10"></td>
+                <td id="10" class="hit"></td>
                 <td id="11"></td>
                 <td id="12"></td>
                 <td id="13"></td>
@@ -133,7 +141,7 @@
 
         <form>
             <input type="text" id="guessInput" placeholder="A0">
-            <input type="submit" id="fireButton" value="Fire">
+            <input type="button" id="fireButton" value="Fire">
         </form>
 
     </div>
