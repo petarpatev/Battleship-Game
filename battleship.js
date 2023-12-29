@@ -13,13 +13,64 @@ var view = {
     },
 }
 
-view.displayMiss("00");
-view.displayHit("34");
-view.displayMiss("55");
-view.displayHit("12");
-view.displayMiss("25");
-view.displayHit("26");
-view.displayMessage("Tap tap, is this thing on?");
+var model = {
+    boardSize: 7,
+    numShips: 3,
+    shipsSunk: 0,
+    shipLength: 3,
+    ships: [
+        {
+            locations: ["00", "01", "02"],
+            hits: ["", "", ""]
+        },
+        {
+            locations: ["42", "43", "44"],
+            hits: ["", "", ""]
+        },
+        {
+            locations: ["20", "30", "40"],
+            hits: ["", "", ""]
+        }
+    ],
+    fire: function (guess) {
+        for (var i = 0; i < this.numShips; i++) {
+            var ship = this.ships[i];
+            var locations = ship.locations;
+            var index = locations.indexOf(guess);
+            if (index >= 0) {
+                ship.hits[index] = "hit";
+                view.displayHit(guess);
+                view.displayMessage("HIT!");
+                if (this.isSunk(ship)) {
+                    this.shipsSunk++;
+                    view.displayMessage("You sunk my battleship!");
+                }
+                return true;
+            }
+        }
+        view.displayMiss(guess);
+        view.displayMessage("MISS!");
+        return false;
+    },
+    isSunk: function (ship) {
+        for (var i = 0; i < this.shipLength; i++) {
+            if (ship.hits[i] !== "hit") {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+model.fire("00");
+model.fire("01");
+model.fire("02");
+model.fire("42");
+model.fire("43");
+model.fire("44");
+model.fire("20");
+model.fire("30");
+model.fire("40");
 
 
 
