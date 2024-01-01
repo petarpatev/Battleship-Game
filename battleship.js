@@ -1,3 +1,17 @@
+function init() {
+    var fireButton = document.getElementById('fireButton');
+    fireButton.onclick = handleFireButton;
+}
+
+function handleFireButton() {
+    var guessInput = document.getElementById('guessInput');
+    var guess = guessInput.value;
+    controller.processGuess(guess);
+    guessInput.value = "";
+}
+window.onload = init;
+
+
 function parseGuess(guess) {
     var alphabetArray = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
     if (guess === null || guess.length !== 2) {
@@ -97,16 +111,16 @@ var controller = {
     }
 }
 
-controller.processGuess("A0");
-controller.processGuess("A1");
-controller.processGuess("A2");
-controller.processGuess("C6");
-controller.processGuess("E2");
-controller.processGuess("E3");
-controller.processGuess("E4");
-controller.processGuess("C0");
-controller.processGuess("D0");
-controller.processGuess("E0");
+// controller.processGuess("A0");
+// controller.processGuess("A1");
+// controller.processGuess("A2");
+// controller.processGuess("C6");
+// controller.processGuess("E2");
+// controller.processGuess("E3");
+// controller.processGuess("E4");
+// controller.processGuess("C0");
+// controller.processGuess("D0");
+// controller.processGuess("E0");
 
 // model.fire("00");
 // model.fire("01");
