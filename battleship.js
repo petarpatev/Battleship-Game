@@ -4,6 +4,8 @@ function init() {
 
     var guessInput = document.getElementById('guessInput');
     guessInput.onkeydown = handleKeyPress;
+
+    model.generateShipLocations();
 }
 
 function handleKeyPress(e) {
@@ -65,15 +67,15 @@ var model = {
     shipLength: 3,
     ships: [
         {
-            locations: ["00", "01", "02"],
+            locations: [0, 0, 0],
             hits: ["", "", ""]
         },
         {
-            locations: ["42", "43", "44"],
+            locations: [0, 0, 0],
             hits: ["", "", ""]
         },
         {
-            locations: ["20", "30", "40"],
+            locations: [0, 0, 0],
             hits: ["", "", ""]
         }
     ],
@@ -104,6 +106,49 @@ var model = {
             }
         }
         return true;
+    },
+    generateShip: function () {
+        var direction = Math.floor(Math.random() * 2);
+        var row, col;
+        var newShipLocations = [];
+
+        if (direction === 0) {
+            row = Math.floor(Math.random() * (this.boardSize - this.shipLength));
+            col = Math.floor(Math.random() * this.boardSize);
+        } else {
+            row = Math.floor(Math.random() * this.boardSize);
+            col = Math.floor(Math.random() * (this.boardSize - this.shipLength));
+        }
+        for (var i = 0; i < this.shipLength; i++) {
+            if (direction === 0) {
+                newShipLocations.push((row + i) + "" + col);
+            } else {
+                newShipLocations.push(row + "" + (col + i))
+            }
+        }
+        return newShipLocations;
+    },
+    isCollision: function (locations) {
+        for (i = 0; i < this.ships; i++) {
+            var ship = this.ships[i];
+            for (var j = 0; j < locations.length; j++) {
+                var currentLocation = locations[j];
+                var index = ship.locations.indexOf(currentLocation);
+                if (index >= 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    },
+    generateShipLocations: function () {
+        var locations;
+        for (var i = 0; i < this.numShips; i++) {
+            do {
+                locations = this.generateShip();
+            } while (this.isCollision(locations))
+            this.ships[i].locations = locations;
+        }
     }
 }
 
